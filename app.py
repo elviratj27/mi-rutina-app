@@ -93,21 +93,25 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* --- SECCIÓN FOCO TÉCNICO COMPLETAMENTE REDISEÑADA --- */
-    /* Modificamos el st.info para que sea totalmente minimalista, arena oscuro y texto negro */
-    div[data-testid="stNotification"] {
+    /* --- SECCIÓN FOCO TÉCNICO COMPLETAMENTE REDISEÑADA (FORZADO) --- */
+    /* Modificamos de forma agresiva cualquier bloque de notificación de Streamlit */
+    div[data-testid="stAlert"] {
         background-color: #E6E2D8 !important; /* Tono lino/arena oscuro sutil */
         border: 1px solid #000000 !important; /* Borde negro fino a juego con las tarjetas */
         border-radius: 0px !important; /* Esquinas rectas completamente editoriales */
         color: #000000 !important;
         padding: 14px 18px !important;
     }
+    /* Forzamos que el texto interno y párrafos de la alerta sean negros sin heredar el azul */
+    div[data-testid="stAlert"] p, div[data-testid="stAlert"] div, div[data-testid="stAlert"] span {
+        color: #000000 !important;
+    }
     /* Ocultamos el icono azul informativo por defecto de Streamlit para no romper el diseño */
-    div[data-testid="stNotification"] svg {
+    div[data-testid="stAlert"] svg {
         display: none !important;
     }
     /* Quitamos el espacio extra que dejaba el icono oculto */
-    div[data-testid="stNotification"] .stMarkdown {
+    div[data-testid="stAlert"] .stMarkdown {
         padding-left: 0px !important;
     }
     </style>
@@ -172,9 +176,9 @@ try:
             bloques_fila = bloques_totales[i:i + columnas_por_fila]
             cols = st.columns(columnas_por_fila)
             
-            for idx,遗 in enumerate(bloques_fila):
+            for idx, bloque in enumerate(bloques_fila):
                 with cols[idx]:
-                    df_b = df_limpio[df_limpio[ "Bloque"] == 遗]
+                    df_b = df_limpio[df_limpio["Bloque"] == bloque]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     
                     # Lista minimalista limpia
@@ -182,7 +186,7 @@ try:
                     
                     st.markdown(f"""
                     <div class="dashboard-card">
-                        <h4 style="margin: 0 0 2px 0;">{遗}</h4>
+                        <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
                         <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios</p>
                         <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
@@ -228,7 +232,7 @@ try:
                 
                 foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
                 if foco:
-                    # Ahora se renderiza con fondo arena oscuro, bordes rectos y letras negras, sin icono azul
+                    # Al usar st.info ahora se aplicará el CSS forzado en negro y arena oscuro
                     st.info(f"**👁️ FOCO TÉCNICO:** {foco}")
 
 except Exception as e:
