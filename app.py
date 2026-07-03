@@ -233,18 +233,16 @@ try:
             descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
             descanso_limpio = limpiar_numero(descanso)
             
-            objetivo_html = f"<p style='margin-bottom:8px;'><strong>🎯 Objetivo:</strong> {fila_limpia['Objetivo']}</p>" if fila_limpia['Objetivo'] else ""
-            justificacion_html = f"<p style='margin-bottom:8px;'><strong>💡 Justificación:</strong> {fila_limpia['Justificación']}</p>" if fila_limpia['Justificación'] else ""
-            ejecucion_html = f"<p style='margin-bottom:8px;'><strong>🛠️ Ejecución:</strong> {fila_limpia['Ejecución']}</p>" if fila_limpia['Ejecución'] else ""
+            # Construcción segura de variables para evitar etiquetas rotas en el html final
+            objetivo_html = f"<p style='margin-bottom:8px;'><strong>🎯 Objetivo:</strong> {fila_limpia['Objetivo']}</p>" if str(fila_limpia['Objetivo']).strip() != "" else ""
+            justificacion_html = f"<p style='margin-bottom:8px;'><strong>💡 Justificación:</strong> {fila_limpia['Justificación']}</p>" if str(fila_limpia['Justificación']).strip() != "" else ""
+            ejecucion_html = f"<p style='margin-bottom:8px;'><strong>🛠️ Ejecución:</strong> {fila_limpia['Ejecución']}</p>" if str(fila_limpia['Ejecución']).strip() != "" else ""
             
             foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
-            foco_html = f"""
-            <div class="custom-foco-box">
-                <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
-            </div>
-            """ if foco else ""
+            foco_html = f'<div class="custom-foco-box"><p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p></div>' if str(foco).strip() != "" else ""
 
-            st.markdown(f"""
+            # HTML limpio unificado sin riesgo de duplicar o romper bloques
+            html_final = f"""
             <details class="custom-accordion">
                 <summary class="custom-accordion-summary">{titulo_tarjeta}</summary>
                 <div class="custom-accordion-content">
@@ -268,7 +266,8 @@ try:
                     {foco_html}
                 </div>
             </details>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(html_final, unsafe_allow_html=True)
 
 except Exception as e:
     st.error(f"Hubo un problema al procesar los datos: {e}")
