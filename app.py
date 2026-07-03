@@ -26,11 +26,11 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* El toque cursiva elegante que aparece en tu captura (ej. Workout Plans) */
+    /* El toque cursiva elegante */
     .serif-italic-accent {
         font-family: 'Playfair Display', serif !important;
         font-style: italic !important;
-        text-transform: none !important; /* Para que mantenga las minúsculas elegantes */
+        text-transform: none !important; 
         font-weight: 400 !important;
         color: #000000 !important;
     }
@@ -51,18 +51,26 @@ st.markdown("""
         letter-spacing: 0.02em;
     }
     
-    /* Cuadrícula del Resumen General */
+    /* --- CUADRÍCULA DE LA VISIÓN GENERAL (AHORA OSCURA SATINADA) --- */
     .dashboard-card {
-        background-color: #F2EFE9;
+        background-color: #2C2C2C !important;
         border: 1px solid #2C2C2C;
         border-radius: 24px !important;
         padding: 22px;
         margin-bottom: 16px;
         height: 100%;
     }
+    .dashboard-card h4 {
+        color: #F2EFE9 !important;
+    }
+    .dashboard-card p {
+        color: #A3A3A3 !important;
+    }
+    .dashboard-card ul {
+        color: #F2EFE9 !important;
+    }
     
-    /* --- SOLUCIÓN DE DISEÑO: DESPLEGABLES OSCUROS UNIFICADOS --- */
-    /* Estructura para los bloques interactivos oscuros */
+    /* --- DESPLEGABLES DE EJERCICIOS OSCUROS UNIFICADOS --- */
     .custom-accordion {
         background-color: #2C2C2C !important;
         border-radius: 24px !important;
@@ -71,7 +79,6 @@ st.markdown("""
         border: 1px solid #2C2C2C;
     }
     
-    /* La barra superior que se pulsa */
     .custom-accordion-summary {
         padding: 16px 24px !important;
         color: #F2EFE9 !important;
@@ -80,21 +87,20 @@ st.markdown("""
         font-size: 1rem;
         letter-spacing: 0.02em;
         outline: none;
-        list-style: none; /* Oculta la flecha nativa molesta */
+        list-style: none; 
     }
     .custom-accordion-summary::-webkit-details-marker {
-        display: none; /* Oculta la flecha en navegadores Safari/iOS */
+        display: none; 
     }
     
-    /* Contenido interior cuando se despliega el ejercicio */
     .custom-accordion-content {
-        background-color: #F8FAFC !important; /* Fondo interno muy limpio e independiente */
+        background-color: #F8FAFC !important; 
         padding: 24px !important;
         border-top: 1px solid #2C2C2C;
         color: #000000 !important;
     }
     
-    /* Estilo para los bloques de texto de las filas de datos */
+    /* Estilo para las métricas internas de los ejercicios */
     .metric-row {
         display: flex;
         justify-content: space-between;
@@ -167,7 +173,7 @@ try:
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (CUADRÍCULA)
+    # VISTA A: RESUMEN GENERAL (AHORA TOTALMENTE INTEGRADO EN OSCURO)
     # -------------------------------------------------------------
     if seleccion == "✨ Ver Resumen General":
         st.markdown('### 📊 <span class="serif-italic-accent">Resumen</span> de la Sesión', unsafe_allow_html=True)
@@ -196,7 +202,7 @@ try:
                     st.markdown(f"""
                     <div class="dashboard-card">
                         <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
-                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios</p>
+                        <p style="margin: 0 0 14px 0; font-size: 0.8rem;">{len(ejercicios_del_bloque)} ejercicios</p>
                         <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
                         </ul>
@@ -204,7 +210,7 @@ try:
                     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # VISTA B: BLOQUE ESPECÍFICO (CON LOS NUEVOS BLOQUES OSCUROS)
+    # VISTA B: BLOQUE ESPECÍFICO
     # -------------------------------------------------------------
     else:
         bloque_actual = seleccion
@@ -221,12 +227,10 @@ try:
             descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
             descanso_limpio = limpiar_numero(descanso)
             
-            # Formateamos los detalles teóricos opcionales en HTML limpio
             objetivo_html = f"<p style='margin-bottom:8px;'><strong>🎯 Objetivo:</strong> {fila_limpia['Objetivo']}</p>" if fila_limpia['Objetivo'] else ""
             justificacion_html = f"<p style='margin-bottom:8px;'><strong>💡 Justificación:</strong> {fila_limpia['Justificación']}</p>" if fila_limpia['Justificación'] else ""
             ejecucion_html = f"<p style='margin-bottom:8px;'><strong>🛠️ Ejecución:</strong> {fila_limpia['Ejecución']}</p>" if fila_limpia['Ejecución'] else ""
             
-            # Bloque de foco técnico
             foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
             foco_html = f"""
             <div class="custom-foco-box">
@@ -234,7 +238,6 @@ try:
             </div>
             """ if foco else ""
 
-            # Renderizado del componente unificado 100% idéntico a tu referencia
             st.markdown(f"""
             <details class="custom-accordion">
                 <summary class="custom-accordion-summary">{titulo_tarjeta}</summary>
