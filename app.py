@@ -10,91 +10,88 @@ st.markdown("""
     /* Importamos la tipografía limpia y ultra-fina de Momentus */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-    /* Fondo oscuro azulado/grafito de la referencia y tipografía fina */
+    /* Fondo GRIS CLARO suave de la referencia y textos grafito oscuro */
     .stApp { 
-        background-color: #0E131F; 
-        color: #F1F5F9; 
+        background-color: #F4F6F9; 
+        color: #1E293B; 
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Títulos limpios, finos y elegantes en blanco puro */
+    /* Títulos limpios, finos y elegantes en el tono oscuro profundo */
     h1, h2, h3, h4 { 
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        color: #FFFFFF !important; 
-        font-weight: 500 !important; /* Más fina para dar elegancia */
+        color: #0F172A !important; 
+        font-weight: 500 !important; /* Estilo fino y elegante */
         letter-spacing: -0.01em;
-    }
-    
-    /* Acento azul celeste de la imagen Momentus */
-    .momentus-accent {
-        color: #93C5FD;
-        font-weight: 600;
     }
     
     /* --- MENÚ LATERAL INTERACTIVO (ESTILO ZARA / COLAPSABLE) --- */
     [data-testid="stSidebar"] {
-        background-color: #171E2E !important;
-        border-right: 1px solid #242F41 !important;
+        background-color: #E2E8F0 !important; /* Gris de contraste suave */
+        border-right: 1px solid #CBD5E1 !important;
     }
     [data-testid="stSidebar"] h3 {
-        color: #93C5FD !important;
+        color: #1E3A8A !important; /* Título en azul oscuro */
         font-weight: 600 !important;
     }
     /* Opciones del menú */
     div[data-testid="stSidebarUserContent"] .stRadio label p {
-        color: #94A3B8 !important;
+        color: #334155 !important;
         font-size: 0.95rem !important;
         font-weight: 500 !important;
     }
     
-    /* Cuadrícula del Resumen General (Tarjetas estilo Momentus) */
+    /* Cuadrícula del Resumen General (Tarjetas blancas con acento azul claro en el borde) */
     .dashboard-card {
-        background-color: #171E2E;
-        border: 1px solid #242F41;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-top: 4px solid #93C5FD; /* Línea superior en el azul clarito de Momentus */
         border-radius: 16px;
         padding: 22px;
         margin-bottom: 16px;
         height: 100%;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03);
     }
     
     /* Tarjetas expandibles para los ejercicios */
     .stExpander { 
-        background-color: #171E2E !important; 
-        border: 1px solid #242F41 !important; 
+        background-color: #FFFFFF !important; 
+        border: 1px solid #E2E8F0 !important; 
         border-radius: 16px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03) !important;
     }
     
-    /* Textos internos más claros y legibles */
+    /* Textos internos de las tarjetas */
     .stMarkdown p, .stExpander label {
-        color: #94A3B8 !important;
+        color: #475569 !important;
         font-weight: 400;
     }
     
-    /* Métricas con el Azul Celeste Fino de Momentus */
+    /* Métricas destacadas en el TONO OSCURO PROFUNDO */
     [data-testid="stMetricValue"] {
-        color: #93C5FD !important;
+        color: #0F172A !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 600 !important;
         font-size: 2.2rem !important;
     }
+    /* Etiquetas de métricas con un toque del AZUL CLARITO */
     [data-testid="stMetricLabel"] p {
-        color: #64748B !important;
+        color: #2563EB !important; /* Azul Momentus */
         font-family: 'Plus Jakarta Sans', sans-serif;
         text-transform: uppercase;
         font-size: 0.75rem !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
         letter-spacing: 0.05em;
     }
     
     /* Caja de Foco Técnico elegante y limpia */
     .stAlert {
-        background-color: #0E131F !important;
-        border: 1px solid #242F41 !important;
+        background-color: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
+        border-left: 4px solid #93C5FD !important; /* Detalle en azul claro */
         border-radius: 12px !important;
-        color: #E2E8F0 !important;
+        color: #334155 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -123,7 +120,7 @@ try:
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (ESTILO DASHBOARD MOMENTUS EN CUADRÍCULA)
+    # VISTA A: RESUMEN GENERAL (DASHBOARD CLARO EN CUADRÍCULA)
     # -------------------------------------------------------------
     if seleccion == "✨ Ver Resumen General":
         st.write("### 📊 Resumen del Entrenamiento")
@@ -150,8 +147,8 @@ try:
                     df_b = df_limpio[df_limpio["Bloque"] == bloque]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     
-                    # Lista minimalista con punto azul claro
-                    ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem; color:#E2E8F0;'><span style='color:#93C5FD; margin-right:6px;'>◦</span>{ej}</li>" for ej in ejercicios_del_bloque])
+                    # Lista minimalista con punto azul claro de Momentus
+                    ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem; color:#334155;'><span style='color:#93C5FD; margin-right:6px;'>🔹</span>{ej}</li>" for ej in ejercicios_del_bloque])
                     
                     st.markdown(f"""
                     <div class="dashboard-card">
@@ -174,7 +171,7 @@ try:
         
         for index, fila_limpia in df_bloque.iterrows():
             carga = str(fila_limpia['Carga']) if fila_limpia['Carga'] != "" else "Peso corporal"
-            titulo_tarjeta = f"🔹 {fila_limpia['Ejercicio']} — ({carga})"
+            titulo_tarjeta = f"▶ {fila_limpia['Ejercicio']} — ({carga})"
             
             with st.expander(titulo_tarjeta):
                 col1, col2, col3 = st.columns(3)
@@ -188,7 +185,7 @@ try:
                 
                 st.write("---")
                 
-                if fila_limpia['Objetivo']:
+                if fila_limpia['Objective'] if 'Objective' in fila_limpia else fila_limpia['Objetivo']:
                     st.markdown(f"**🎯 Objetivo:** {fila_limpia['Objetivo']}")
                 if fila_limpia['Justificación']:
                     st.markdown(f"**💡 Justificación:** {fila_limpia['Justificación']}")
