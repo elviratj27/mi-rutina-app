@@ -7,76 +7,103 @@ st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layou
 
 st.markdown("""
     <style>
-    /* Fondo oscuro grafito y textos limpios */
+    /* Importamos tipografías elegantes desde Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    /* Fondo general estilo lino/crema suave de Sereniti y textos grafito */
     .stApp { 
-        background-color: #0B0F19; 
-        color: #F8FAFC; 
+        background-color: #F4F1EA; 
+        color: #2E2A25; 
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Títulos principales */
-    h1, h2, h3, h4 { 
-        color: #FFFFFF !important; 
-        font-weight: 700 !important; 
+    /* Títulos principales con tipografía Serif elegante */
+    h1, h2, h3 { 
+        font-family: 'Playfair Display', serif !important;
+        color: #2E2A25 !important; 
+        font-weight: 600 !important; 
     }
     
-    /* --- ESTILO PARA EL MENÚ LATERAL (SIDEBAR) ESTILO ZARA --- */
+    /* Subtítulos y énfasis en cursiva elegante */
+    .serif-italic {
+        font-family: 'Playfair Display', serif !important;
+        font-style: italic;
+        color: #D4A3B3; /* Tono rosa viejo/malva de acento */
+    }
+    
+    /* --- MENÚ LATERAL (SIDEBAR COLAPSABLE ESTILO ZARA) --- */
     [data-testid="stSidebar"] {
-        background-color: #1E293B !important; /* Un gris satinado elegante */
-        border-right: 1px solid #334155 !important;
+        background-color: #ECE8DF !important; /* Un tono más oscuro que el fondo para dar contraste */
+        border-right: 1px solid #E3DDD0 !important;
     }
     [data-testid="stSidebar"] h3 {
-        color: #A7F3D0 !important; /* Título del menú en verde pastel */
+        font-family: 'Playfair Display', serif !important;
+        color: #2E2A25 !important;
     }
-    /* Estilo para los botones de opción de radio en el menú */
+    /* Estilo para los botones de opción en el menú */
     div[data-testid="stSidebarUserContent"] .stRadio label p {
-        color: #E2E8F0 !important;
-        font-size: 1.1rem !important;
+        color: #4A443C !important;
+        font-size: 1.05rem !important;
         font-weight: 500 !important;
-        padding: 5px 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Tarjetas del Dashboard de la página principal */
+    /* Tarjetas del Dashboard de la página principal (Blanco puro con bordes suaves) */
     .dashboard-card {
-        background-color: #1E293B;
-        border: 1px solid #334155;
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        background-color: #FFFFFF;
+        border: 1px solid #EAE5DB;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(74, 68, 60, 0.04);
     }
     
-    /* Tarjetas expandibles de ejercicios */
+    /* Tarjetas expandibles de ejercicios (Estilo bloques inferiores de Sereniti) */
     .stExpander { 
-        background-color: #1E293B !important; 
-        border: 1px solid #334155 !important; 
-        border-radius: 12px !important;
-        margin-bottom: 10px !important;
+        background-color: #FFFFFF !important; 
+        border: 1px solid #EAE5DB !important; 
+        border-radius: 16px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 4px 20px rgba(74, 68, 60, 0.04) !important;
     }
     
-    /* Ajustes de color para textos y marcas */
+    /* Ajustes de color para textos generales */
     .stMarkdown p, .stExpander label {
-        color: #E2E8F0 !important;
+        color: #4A443C !important;
     }
     
-    /* Métricas numéricas (Verde Pastel Suave) */
+    /* Métricas numéricas destacados en Rosa Malva Suave */
     [data-testid="stMetricValue"] {
-        color: #A7F3D0 !important;
+        color: #C28CA0 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700 !important;
     }
     [data-testid="stMetricLabel"] p {
-        color: #94A3B8 !important;
+        color: #7A7265 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        text-transform: uppercase;
+        font-size: 0.75rem !important;
+        letter-spacing: 0.05em;
     }
     
-    /* Recuadro del Foco Técnico */
+    /* Icono o viñeta de los ejercicios en el Dashboard */
+    .bullet-icon {
+        color: #C28CA0;
+        margin-right: 8px;
+    }
+    
+    /* Recuadro del Foco Técnico con fondo sutil malva */
     .stAlert {
-        background-color: #0F172A !important;
-        border: 1px solid #A7F3D0 !important;
-        color: #E2E8F0 !important;
+        background-color: #FAF6F0 !important;
+        border: 1px solid #EAD5DC !important;
+        border-radius: 12px !important;
+        color: #4A443C !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🏋️‍♂️ Mi Panel de Entrenamiento")
+# Título principal adaptado al diseño minimalista
+st.markdown('<h1>Mi Espacio de <span class="serif-italic">Entrenamiento</span></h1>', unsafe_allow_html=True)
 st.write("---")
 
 # 2. Cargar datos del Excel
@@ -90,31 +117,29 @@ try:
     # Obtener los bloques únicos
     bloques_totales = [b for b in df_limpio["Bloque"].unique() if b != ""]
     
-    # --- MENÚ DESPLEGABLE SUPERIOR IZQUIERDO (SIDEBAR ESTILO ZARA) ---
-    # Creamos las opciones del menú. La primera siempre regresa al Dashboard global.
-    opciones_menu = ["📊 Ver Resumen General"] + list(bloques_totales)
+    # --- MENÚ DESPLEGABLE SIDEBAR ---
+    opciones_menu = ["✨ Resumen General"] + list(bloques_totales)
     
     with st.sidebar:
         st.write("")
-        st.write("### 📂 Categorías / Bloques")
+        st.write("### 🧭 Explorar Bloques")
         st.write("---")
-        # El selector visual tipo lista interactiva
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: SI EL USUARIO SELECCIONA EL RESUMEN GENERAL
+    # VISTA A: RESUMEN GENERAL (ESTILO DASHBOARD SERENITI)
     # -------------------------------------------------------------
-    if seleccion == "📊 Ver Resumen General":
-        st.write("### 📊 Resumen del Entrenamiento")
+    if seleccion == "✨ Resumen General":
+        st.markdown('### 📊 <span class="serif-italic">Resumen</span> de la Sesión', unsafe_allow_html=True)
         
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
-        # KPIs Principales con el texto corregido a "Número de Bloques"
+        # KPIs Principales
         kpi1, kpi2 = st.columns(2)
         with kpi1:
-            st.metric(label="⏱️ Número de Bloques", value=str(len(bloques_totales)))
+            st.metric(label="Número de Bloques", value=str(len(bloques_totales)))
         with kpi2:
-            st.metric(label="💪 Ejercicios Hoy", value=str(total_ejercicios))
+            st.metric(label="Ejercicios Programados", value=str(total_ejercicios))
             
         st.write("")
         
@@ -123,41 +148,40 @@ try:
             df_b = df_limpio[df_limpio["Bloque"] == bloque]
             ejercicios_del_bloque = df_b["Ejercicio"].tolist()
             
-            ejercicios_html = "".join([f"<li style='margin-bottom:4px;'>🔹 {ej}</li>" for ej in ejercicios_del_bloque])
+            ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.95rem;'><span style='color:#C28CA0;'>✦</span> {ej}</li>" for ej in ejercicios_del_bloque])
             
             st.markdown(f"""
             <div class="dashboard-card">
-                <h4 style="margin: 0 0 8px 0; color: #A7F3D0 !important;">📍 {bloque}</h4>
-                <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #94A3B8;">Contiene {len(ejercicios_del_bloque)} ejercicios prescritos</p>
-                <ul style="margin: 0; padding-left: 20px; list-style-type: none; color: #E2E8F0;">
+                <h4 style="margin: 0 0 6px 0; font-family: 'Playfair Display', serif; color: #2E2A25 !important;">{bloque}</h4>
+                <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: #7A7265; font-family: 'Plus Jakarta Sans', sans-serif;">Consta de {len(ejercicios_del_bloque)} fases de movimiento</p>
+                <ul style="margin: 0; padding-left: 5px; list-style-type: none; color: #4A443C;">
                     {ejercicios_html}
                 </ul>
             </div>
             """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # VISTA B: SI EL USUARIO SELECCIONA UN BLOQUE ESPECÍFICO
+    # VISTA B: BLOQUE ESPECÍFICO
     # -------------------------------------------------------------
     else:
-        # Aquí entra cuando pinchas un bloque del menú desplegable
         bloque_actual = seleccion
-        st.write(f"### {bloque_actual}")
+        st.markdown(f'### <span class="serif-italic">Fase</span> — {bloque_actual}', unsafe_allow_html=True)
         
         df_bloque = df_limpio[df_limpio["Bloque"] == bloque_actual]
         
         for index, fila_limpia in df_bloque.iterrows():
             carga = str(fila_limpia['Carga']) if fila_limpia['Carga'] != "" else "Peso corporal"
-            titulo_tarjeta = f"🎯 {fila_limpia['Ejercicio']} ({carga})"
+            titulo_tarjeta = f"✨ {fila_limpia['Ejercicio']} — {carga}"
             
             with st.expander(titulo_tarjeta):
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric(label="🔢 Series", value=str(fila_limpia['Series']))
+                    st.metric(label="Series", value=str(fila_limpia['Series']))
                 with col2:
-                    st.metric(label="🔁 Reps", value=str(fila_limpia['Reps']))
+                    st.metric(label="Reps", value=str(fila_limpia['Reps']))
                 with col3:
                     descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
-                    st.metric(label="⏱️ Descanso", value=str(descanso))
+                    st.metric(label="Descanso", value=str(descanso))
                 
                 st.write("---")
                 
