@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# 1. Configuración de página
+# 1. Configuración de página con nombre limpio en el navegador
 st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layout="centered")
 
 st.markdown("""
@@ -93,12 +93,22 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* Caja de Foco Técnico ultra limpia */
-    .stAlert {
-        background-color: #E6E2D8 !important;
-        border: 1px solid #000000 !important;
-        border-radius: 0px !important;
+    /* --- SECCIÓN FOCO TÉCNICO COMPLETAMENTE REDISEÑADA --- */
+    /* Modificamos el st.info para que sea totalmente minimalista, arena oscuro y texto negro */
+    div[data-testid="stNotification"] {
+        background-color: #E6E2D8 !important; /* Tono lino/arena oscuro sutil */
+        border: 1px solid #000000 !important; /* Borde negro fino a juego con las tarjetas */
+        border-radius: 0px !important; /* Esquinas rectas completamente editoriales */
         color: #000000 !important;
+        padding: 14px 18px !important;
+    }
+    /* Ocultamos el icono azul informativo por defecto de Streamlit para no romper el diseño */
+    div[data-testid="stNotification"] svg {
+        display: none !important;
+    }
+    /* Quitamos el espacio extra que dejaba el icono oculto */
+    div[data-testid="stNotification"] .stMarkdown {
+        padding-left: 0px !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -162,9 +172,9 @@ try:
             bloques_fila = bloques_totales[i:i + columnas_por_fila]
             cols = st.columns(columnas_por_fila)
             
-            for idx, bloque in enumerate(bloques_fila):
+            for idx,遗 in enumerate(bloques_fila):
                 with cols[idx]:
-                    df_b = df_limpio[df_limpio["Bloque"] == bloque]
+                    df_b = df_limpio[df_limpio[ "Bloque"] == 遗]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     
                     # Lista minimalista limpia
@@ -172,7 +182,7 @@ try:
                     
                     st.markdown(f"""
                     <div class="dashboard-card">
-                        <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
+                        <h4 style="margin: 0 0 2px 0;">{遗}</h4>
                         <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios</p>
                         <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
@@ -218,7 +228,8 @@ try:
                 
                 foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
                 if foco:
-                    st.info(f"👁️ **Foco Técnico:** {foco}")
+                    # Ahora se renderiza con fondo arena oscuro, bordes rectos y letras negras, sin icono azul
+                    st.info(f"**👁️ FOCO TÉCNICO:** {foco}")
 
 except Exception as e:
     st.error(f"Hubo un problema al procesar los datos: {e}")
