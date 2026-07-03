@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# 1. Configuración de página y Estilo "Dashboard Oscuro Premium"
-st.set_page_config(page_title="Rutina Premium", page_icon="💪", layout="centered")
+# 1. Nombre de la pestaña del navegador limpio (Adiós "Premium")
+st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layout="centered")
 
 st.markdown("""
     <style>
@@ -19,13 +19,15 @@ st.markdown("""
         font-weight: 700 !important; 
     }
     
-    /* --- FULMINAR LA LÍNEA ROJA DE LAS PESTAÑAS --- */
-    /* Eliminamos la línea roja inferior por defecto de Streamlit */
-    .stTabs [data-baseweb="tab-highlight-bar"] {
-        background-color: transparent !important;
-        display: none !important;
+    /* --- CAMBIAR EL COLOR ROJO DE LA LÍNEA DE RESALTO --- */
+    /* Forzamos que la línea nativa de Streamlit sea del mismo verde pastel suave */
+    .stTabs [data-baseweb="tab-highlight-bar"], 
+    div[data-baseweb="tab-highlight-bar"] {
+        background-color: #A7F3D0 !important;
+        height: 2px !important;
     }
-    /* Quitamos el borde inferior de la lista de pestañas */
+    
+    /* Quitamos cualquier borde inferior gris sobrante */
     .stTabs [data-baseweb="tab-list"] {
         border-bottom: none !important;
         gap: 10px;
@@ -40,7 +42,7 @@ st.markdown("""
         padding: 8px 18px !important;
         font-weight: 600 !important;
     }
-    /* Botón/Pestaña seleccionada (Verde Pastel suave sin línea roja abajo) */
+    /* Botón/Pestaña seleccionada (Verde Pastel suave) */
     .stTabs [aria-selected="true"] {
         background-color: #0F172A !important;
         color: #A7F3D0 !important;
@@ -101,23 +103,23 @@ try:
     # Obtener la lista limpia de bloques
     bloques_totales = [b for b in df_limpio["Bloque"].unique() if b != ""]
     
-    # --- PESTAÑAS (Limpias, sin emoticonos raros) ---
+    # --- PESTAÑAS (Visión General + Bloques) ---
     lista_pestanas = ["Visión General"] + [str(bloque) for bloque in bloques_totales]
     pestanas_interactivas = st.tabs(lista_pestanas)
 
     # -------------------------------------------------------------
-    # PESTAÑA 1: VISIÓN GENERAL (ESTILO DASHBOARD)
+    # PESTAÑA 1: VISIÓN GENERAL (ESTILO DASHBOARD MODIFICADO)
     # -------------------------------------------------------------
     with pestanas_interactivas[0]:
         st.write("")
-        st.write("### 📊 Dashboard de la Sesión")
+        st.write("### 📊 Resumen del Entrenamiento")
         
         # Fila de kpis principales arriba
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
         kpi1, kpi2 = st.columns(2)
         with kpi1:
-            st.metric(label="⏱️ Bloques Totales", value=str(len(bloques_totales)))
+            st.metric(label="⏱ Honor de Bloques", value=str(len(bloques_totales)))
         with kpi2:
             st.metric(label="💪 Ejercicios Hoy", value=str(total_ejercicios))
             
