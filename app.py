@@ -199,16 +199,15 @@ try:
             bloques_fila = bloques_totales[i:i + columnas_por_fila]
             cols = st.columns(columnas_por_fila)
             
-            for idx, bloque in enumerate(bloques_fila):
+            for idx, bloque_resumen in enumerate(bloques_fila):
                 with cols[idx]:
-                    df_b = df_limpio[df_limpio["Bloque"] == bloque]
+                    df_b = df_limpio[df_limpio["Bloque"] == bloque_resumen]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem;'>▪ {ej}</li>" for ej in ejercicios_del_bloque])
                     
-                    # CORREGIDO: Se estructuró el HTML limpio de la tarjeta sin cierres duplicados
                     st.markdown(f"""
                     <div class="dashboard-card">
-                        <h4>{bloque}</h4>
+                        <h4>{bloque_resumen}</h4>
                         <p>{len(ejercicios_del_bloque)} ejercicios</p>
                         <ul>
                             {ejercicios_html}
