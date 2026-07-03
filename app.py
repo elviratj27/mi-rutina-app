@@ -2,106 +2,126 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# 1. Configuración de página con nombre limpio en el navegador
+# 1. Configuración de página 
 st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layout="centered")
 
 st.markdown("""
     <style>
-    /* Importamos la tipografía limpia y ultra-fina de Momentus */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    /* Importamos las fuentes de la imagen: Inter para lo moderno y Playfair para el toque de diseño */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap');
 
-    /* Fondo GRIS CLARO suave de la referencia y textos grafito oscuro */
+    /* Fondo ARENA CLARO de la imagen y textos negro profundo */
     .stApp { 
-        background-color: #F4F6F9; 
-        color: #1E293B; 
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #F2EFE9; 
+        color: #000000; 
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Títulos limpios, finos y elegantes en el tono oscuro profundo */
+    /* Títulos principales en Mayúsculas, tipografía limpia e impacto editorial */
     h1, h2, h3, h4 { 
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        color: #0F172A !important; 
-        font-weight: 500 !important; /* Estilo fino y elegante */
-        letter-spacing: -0.01em;
+        font-family: 'Inter', sans-serif !important;
+        color: #000000 !important; 
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    /* El toque cursiva elegante que aparece en tu captura (ej. Workout Plans) */
+    .serif-italic-accent {
+        font-family: 'Playfair Display', serif !important;
+        font-style: italic !important;
+        text-transform: none !important; /* Para que mantenga las minúsculas elegantes */
+        font-weight: 400 !important;
+        color: #000000 !important;
     }
     
     /* --- MENÚ LATERAL INTERACTIVO (ESTILO ZARA / COLAPSABLE) --- */
     [data-testid="stSidebar"] {
-        background-color: #E2E8F0 !important; /* Gris de contraste suave */
-        border-right: 1px solid #CBD5E1 !important;
+        background-color: #E6E2D8 !important; /* Un tono un pelín más oscuro para contrastar */
+        border-right: 1px solid #D9D4C7 !important;
     }
     [data-testid="stSidebar"] h3 {
-        color: #1E3A8A !important; /* Título en azul oscuro */
-        font-weight: 600 !important;
+        color: #000000 !important;
     }
-    /* Opciones del menú */
+    /* Opciones del menú lateral */
     div[data-testid="stSidebarUserContent"] .stRadio label p {
-        color: #334155 !important;
+        color: #000000 !important;
         font-size: 0.95rem !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
     }
     
-    /* Cuadrícula del Resumen General (Tarjetas blancas con acento azul claro en el borde) */
+    /* Cuadrícula del Resumen General (Tarjetas del mismo color con borde negro muy fino) */
     .dashboard-card {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-top: 4px solid #93C5FD; /* Línea superior en el azul clarito de Momentus */
-        border-radius: 16px;
+        background-color: #F2EFE9;
+        border: 1px solid #000000;
+        border-radius: 0px; /* Estilo editorial rectilíneo, sin bordes redondeados infantiles */
         padding: 22px;
         margin-bottom: 16px;
         height: 100%;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03);
     }
     
-    /* Tarjetas expandibles para los ejercicios */
+    /* Tarjetas expandibles para los ejercicios (Estilo minimalista puro) */
     .stExpander { 
-        background-color: #FFFFFF !important; 
-        border: 1px solid #E2E8F0 !important; 
-        border-radius: 16px !important;
+        background-color: #F2EFE9 !important; 
+        border: 1px solid #000000 !important; 
+        border-radius: 0px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03) !important;
     }
     
     /* Textos internos de las tarjetas */
     .stMarkdown p, .stExpander label {
-        color: #475569 !important;
+        color: #000000 !important;
         font-weight: 400;
     }
     
-    /* Métricas destacadas en el TONO OSCURO PROFUNDO */
+    /* Métricas destacadas en NEGRO ABSOLUTO */
     [data-testid="stMetricValue"] {
-        color: #0F172A !important;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 600 !important;
-        font-size: 2.2rem !important;
+        color: #000000 !important;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700 !important;
+        font-size: 2.4rem !important;
     }
-    /* Etiquetas de métricas con un toque del AZUL CLARITO */
+    /* Etiquetas de métricas en gris oscuro/grafito */
     [data-testid="stMetricLabel"] p {
-        color: #2563EB !important; /* Azul Momentus */
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: #555555 !important;
+        font-family: 'Inter', sans-serif;
         text-transform: uppercase;
         font-size: 0.75rem !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         letter-spacing: 0.05em;
     }
     
-    /* Caja de Foco Técnico elegante y limpia */
+    /* Caja de Foco Técnico ultra limpia */
     .stAlert {
-        background-color: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
-        border-left: 4px solid #93C5FD !important; /* Detalle en azul claro */
-        border-radius: 12px !important;
-        color: #334155 !important;
+        background-color: #E6E2D8 !important;
+        border: 1px solid #000000 !important;
+        border-radius: 0px !important;
+        color: #000000 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-st.title("💪 Mi Panel de Entrenamiento")
+# Cabecera con el estilo tipográfico de tu captura
+st.markdown('<h1>WORKOUT <span class="serif-italic-accent">Plans</span></h1>', unsafe_allow_html=True)
 st.write("---")
 
 # 2. Cargar datos del Excel
 def cargar_datos():
     return pd.read_excel("rutina.xlsx")
+
+# Función auxiliar para limpiar números con .0
+def limpiar_numero(valor):
+    if valor == "":
+        return ""
+    try:
+        float_val = float(valor)
+        if float_val.is_integer():
+            return str(int(float_val))
+        return str(valor)
+    except ValueError:
+        return str(valor)
 
 try:
     df = cargar_datos()
@@ -115,15 +135,15 @@ try:
     
     with st.sidebar:
         st.write("")
-        st.write("### 🧭 Menú de Sesión")
+        st.write("### 🧭 INDEX")
         st.write("---")
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (DASHBOARD CLARO EN CUADRÍCULA)
+    # VISTA A: RESUMEN GENERAL (DASHBOARD EDITORIAL EN CUADRÍCULA)
     # -------------------------------------------------------------
     if seleccion == "✨ Ver Resumen General":
-        st.write("### 📊 Resumen del Entrenamiento")
+        st.markdown('### 📊 <span class="serif-italic-accent">Resumen</span> de la Sesión', unsafe_allow_html=True)
         
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
@@ -147,13 +167,13 @@ try:
                     df_b = df_limpio[df_limpio["Bloque"] == bloque]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     
-                    # Lista minimalista con punto azul claro de Momentus
-                    ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem; color:#334155;'><span style='color:#93C5FD; margin-right:6px;'>🔹</span>{ej}</li>" for ej in ejercicios_del_bloque])
+                    # Lista minimalista limpia
+                    ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem;'>▪ {ej}</li>" for ej in ejercicios_del_bloque])
                     
                     st.markdown(f"""
                     <div class="dashboard-card">
                         <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
-                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #64748B;">{len(ejercicios_del_bloque)} ejercicios asignados</p>
+                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios prescritos</p>
                         <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
                         </ul>
@@ -171,21 +191,25 @@ try:
         
         for index, fila_limpia in df_bloque.iterrows():
             carga = str(fila_limpia['Carga']) if fila_limpia['Carga'] != "" else "Peso corporal"
-            titulo_tarjeta = f"▶ {fila_limpia['Ejercicio']} — ({carga})"
+            titulo_tarjeta = f"→ {fila_limpia['Ejercicio']} — ({carga})"
+            
+            series_limpias = limpiar_numero(fila_limpia['Series'])
+            reps_limpias = limpiar_numero(fila_limpia['Reps'])
             
             with st.expander(titulo_tarjeta):
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric(label="Series", value=str(fila_limpia['Series']))
+                    st.metric(label="Series", value=series_limpias)
                 with col2:
-                    st.metric(label="Reps", value=str(fila_limpia['Reps']))
+                    st.metric(label="Reps", value=reps_limpias)
                 with col3:
                     descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
-                    st.metric(label="Descanso", value=str(descanso))
+                    descanso_limpio = limpiar_numero(descanso)
+                    st.metric(label="Descanso", value=descanso_limpio)
                 
                 st.write("---")
                 
-                if fila_limpia['Objective'] if 'Objective' in fila_limpia else fila_limpia['Objetivo']:
+                if fila_limpia['Objetivo']:
                     st.markdown(f"**🎯 Objetivo:** {fila_limpia['Objetivo']}")
                 if fila_limpia['Justificación']:
                     st.markdown(f"**💡 Justificación:** {fila_limpia['Justificación']}")
