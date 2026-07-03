@@ -7,91 +7,99 @@ st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layou
 
 st.markdown("""
     <style>
-    /* Importamos una tipografía refinada y moderna */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    /* Importamos la tipografía limpia y ultra-fina de Momentus */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-    /* Fondo limpio blanco/gris claro premium y textos grafito oscuro */
+    /* Fondo oscuro azulado/grafito de la referencia y tipografía fina */
     .stApp { 
-        background-color: #F8FAFC; 
-        color: #1E293B; 
+        background-color: #0E131F; 
+        color: #F1F5F9; 
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Títulos principales en Azul Marino Profundo (Elegante y Atlético) */
+    /* Títulos limpios, finos y elegantes en blanco puro */
     h1, h2, h3, h4 { 
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        color: #0F172A !important; 
-        font-weight: 700 !important;
+        color: #FFFFFF !important; 
+        font-weight: 500 !important; /* Más fina para dar elegancia */
         letter-spacing: -0.01em;
     }
     
-    /* --- MENÚ LATERAL (SIDEBAR COLAPSABLE ESTILO ZARA) --- */
+    /* Acento azul celeste de la imagen Momentus */
+    .momentus-accent {
+        color: #93C5FD;
+        font-weight: 600;
+    }
+    
+    /* --- MENÚ LATERAL INTERACTIVO (ESTILO ZARA / COLAPSABLE) --- */
     [data-testid="stSidebar"] {
-        background-color: #F1F5F9 !important; /* Gris suave de contraste */
-        border-right: 1px solid #E2E8F0 !important;
+        background-color: #171E2E !important;
+        border-right: 1px solid #242F41 !important;
     }
     [data-testid="stSidebar"] h3 {
-        color: #0F172A !important;
-        font-weight: 700 !important;
-    }
-    /* Botones de opción en el menú */
-    div[data-testid="stSidebarUserContent"] .stRadio label p {
-        color: #334155 !important;
-        font-size: 1rem !important;
+        color: #93C5FD !important;
         font-weight: 600 !important;
     }
+    /* Opciones del menú */
+    div[data-testid="stSidebarUserContent"] .stRadio label p {
+        color: #94A3B8 !important;
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+    }
     
-    /* Tarjetas del Dashboard en Cuadrícula (Fondo blanco puro, bordes muy finos) */
+    /* Cuadrícula del Resumen General (Tarjetas estilo Momentus) */
     .dashboard-card {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 14px;
-        padding: 18px;
+        background-color: #171E2E;
+        border: 1px solid #242F41;
+        border-radius: 16px;
+        padding: 22px;
         margin-bottom: 16px;
-        height: 100%; /* Para que todas midan lo mismo en la cuadrícula */
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.02), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
+        height: 100%;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     }
     
-    /* Tarjetas expandibles de ejercicios (Líneas limpias) */
+    /* Tarjetas expandibles para los ejercicios */
     .stExpander { 
-        background-color: #FFFFFF !important; 
-        border: 1px solid #E2E8F0 !important; 
-        border-radius: 14px !important;
+        background-color: #171E2E !important; 
+        border: 1px solid #242F41 !important; 
+        border-radius: 16px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.02) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
     }
     
-    /* Ajustes de color para textos generales */
+    /* Textos internos más claros y legibles */
     .stMarkdown p, .stExpander label {
-        color: #475569 !important;
+        color: #94A3B8 !important;
+        font-weight: 400;
     }
     
-    /* Métricas numéricas destacadas en Verde Salvia/Atlético Mate (Unisex) */
+    /* Métricas con el Azul Celeste Fino de Momentus */
     [data-testid="stMetricValue"] {
-        color: #16A34A !important;
+        color: #93C5FD !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
+        font-size: 2.2rem !important;
     }
     [data-testid="stMetricLabel"] p {
         color: #64748B !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
         text-transform: uppercase;
         font-size: 0.75rem !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.04em;
+        font-weight: 500 !important;
+        letter-spacing: 0.05em;
     }
     
-    /* Recuadro del Foco Técnico con un tono de alerta suave neutro */
+    /* Caja de Foco Técnico elegante y limpia */
     .stAlert {
-        background-color: #F8FAFC !important;
-        border: 1px solid #CBD5E1 !important;
+        background-color: #0E131F !important;
+        border: 1px solid #242F41 !important;
         border-radius: 12px !important;
-        color: #334155 !important;
+        color: #E2E8F0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🏋️‍♂️ Mi Panel de Entrenamiento")
+st.title("💪 Mi Panel de Entrenamiento")
 st.write("---")
 
 # 2. Cargar datos del Excel
@@ -105,41 +113,36 @@ try:
     # Obtener los bloques únicos
     bloques_totales = [b for b in df_limpio["Bloque"].unique() if b != ""]
     
-    # --- MENÚ DESPLEGABLE SIDEBAR (ESTILO ZARA) ---
-    opciones_menu = ["✨ Resumen General"] + list(bloques_totales)
+    # --- MENÚ SIDEBAR ---
+    opciones_menu = ["✨ Ver Resumen General"] + list(bloques_totales)
     
     with st.sidebar:
         st.write("")
-        st.write("### 🧭 Menú de Bloques")
+        st.write("### 🧭 Menú de Sesión")
         st.write("---")
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (DASHBOARD EN CUADRÍCULA SEGÚN TU BOCETO)
+    # VISTA A: RESUMEN GENERAL (ESTILO DASHBOARD MOMENTUS EN CUADRÍCULA)
     # -------------------------------------------------------------
-    if seleccion == "✨ Resumen General":
-        st.write("### 📊 Resumen de la Sesión")
+    if seleccion == "✨ Ver Resumen General":
+        st.write("### 📊 Resumen del Entrenamiento")
         
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
-        # KPIs Principales en horizontal
+        # KPIs de cabecera finos
         kpi1, kpi2 = st.columns(2)
         with kpi1:
             st.metric(label="Número de Bloques", value=str(len(bloques_totales)))
         with kpi2:
-            st.metric(label="Ejercicios Hoy", value=str(total_ejercicios))
+            st.metric(label="Ejercicios Programados", value=str(total_ejercicios))
             
         st.write("---")
         
-        # --- AQUÍ CREAMOS LA CUADRÍCULA DE TU DIBUJO ---
-        # Creamos filas de 2 columnas cada una
+        # Cuadrícula horizontal (2 bloques por fila)
         columnas_por_fila = 2
-        
         for i in range(0, len(bloques_totales), columnas_por_fila):
-            # Seleccionamos el grupo de bloques para esta fila (máximo 2)
             bloques_fila = bloques_totales[i:i + columnas_por_fila]
-            
-            # Generamos las columnas visuales en Streamlit
             cols = st.columns(columnas_por_fila)
             
             for idx, bloque in enumerate(bloques_fila):
@@ -147,14 +150,14 @@ try:
                     df_b = df_limpio[df_limpio["Bloque"] == bloque]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     
-                    # Formato de lista elegante
-                    ejercicios_html = "".join([f"<li style='margin-bottom:4px; font-size:0.9rem;'>🔹 {ej}</li>" for ej in ejercicios_del_bloque])
+                    # Lista minimalista con punto azul claro
+                    ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem; color:#E2E8F0;'><span style='color:#93C5FD; margin-right:6px;'>◦</span>{ej}</li>" for ej in ejercicios_del_bloque])
                     
                     st.markdown(f"""
                     <div class="dashboard-card">
-                        <h4 style="margin: 0 0 4px 0; color: #1E3A8A !important;">{bloque}</h4>
-                        <p style="margin: 0 0 12px 0; font-size: 0.8rem; color: #64748B;">{len(ejercicios_del_bloque)} ejercicios</p>
-                        <ul style="margin: 0; padding-left: 15px; list-style-type: none; color: #334155;">
+                        <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
+                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #64748B;">{len(ejercicios_del_bloque)} ejercicios asignados</p>
+                        <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
                         </ul>
                     </div>
@@ -171,7 +174,7 @@ try:
         
         for index, fila_limpia in df_bloque.iterrows():
             carga = str(fila_limpia['Carga']) if fila_limpia['Carga'] != "" else "Peso corporal"
-            titulo_tarjeta = f"▶ {fila_limpia['Ejercicio']} — ({carga})"
+            titulo_tarjeta = f"🔹 {fila_limpia['Ejercicio']} — ({carga})"
             
             with st.expander(titulo_tarjeta):
                 col1, col2, col3 = st.columns(3)
