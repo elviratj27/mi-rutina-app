@@ -51,7 +51,7 @@ st.markdown("""
         letter-spacing: 0.02em;
     }
     
-    /* --- CUADRÍCULA DE LA VISIÓN GENERAL (AHORA OSCURA SATINADA) --- */
+    /* --- CUADRÍCULA DE LA VISIÓN GENERAL (OSCURA SATINADA) --- */
     .dashboard-card {
         background-color: #2C2C2C !important;
         border: 1px solid #2C2C2C;
@@ -62,12 +62,18 @@ st.markdown("""
     }
     .dashboard-card h4 {
         color: #F2EFE9 !important;
+        margin: 0 0 2px 0 !important;
     }
     .dashboard-card p {
         color: #A3A3A3 !important;
+        margin: 0 0 14px 0 !important;
+        font-size: 0.8rem !important;
     }
     .dashboard-card ul {
         color: #F2EFE9 !important;
+        margin: 0 !important;
+        padding-left: 5px !important;
+        list-style-type: none !important;
     }
     
     /* --- DESPLEGABLES DE EJERCICIOS OSCUROS UNIFICADOS --- */
@@ -173,7 +179,7 @@ try:
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (AHORA TOTALMENTE INTEGRADO EN OSCURO)
+    # VISTA A: RESUMEN GENERAL
     # -------------------------------------------------------------
     if seleccion == "✨ Ver Resumen General":
         st.markdown('### 📊 <span class="serif-italic-accent">Resumen</span> de la Sesión', unsafe_allow_html=True)
@@ -199,11 +205,12 @@ try:
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
                     ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem;'>▪ {ej}</li>" for ej in ejercicios_del_bloque])
                     
+                    # CORREGIDO: Se estructuró el HTML limpio de la tarjeta sin cierres duplicados
                     st.markdown(f"""
                     <div class="dashboard-card">
-                        <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
-                        <p style="margin: 0 0 14px 0; font-size: 0.8rem;">{len(ejercicios_del_bloque)} ejercicios</p>
-                        <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
+                        <h4>{bloque}</h4>
+                        <p>{len(ejercicios_del_bloque)} ejercicios</p>
+                        <ul>
                             {ejercicios_html}
                         </ul>
                     </div>
