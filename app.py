@@ -52,22 +52,29 @@ st.markdown("""
         letter-spacing: 0.02em;
     }
     
-    /* Cuadrícula del Resumen General (Tarjetas del mismo color con borde negro muy fino) */
+    /* Cuadrícula del Resumen General (Tarjetas con las nuevas esquinas redondeadas elegantes) */
     .dashboard-card {
         background-color: #F2EFE9;
-        border: 1px solid #000000;
-        border-radius: 0px; /* Estilo editorial rectilíneo, sin bordes redondeados infantiles */
+        border: 1px solid #2C2C2C;
+        border-radius: 24px !important; /* Esquinas redondeadas como tu referencia */
         padding: 22px;
         margin-bottom: 16px;
         height: 100%;
     }
     
-    /* Tarjetas expandibles para los ejercicios (Estilo minimalista puro) */
+    /* --- ADAPTACIÓN DE LOS DESPLEGABLES DE EJERCICIOS --- */
+    /* Modificamos los expanders para que tengan la misma estética y redondeado suave */
     .stExpander { 
         background-color: #F2EFE9 !important; 
-        border: 1px solid #000000 !important; 
-        border-radius: 0px !important;
+        border: 1px solid #2C2C2C !important; 
+        border-radius: 24px !important; /* Esquinas suaves idénticas a la referencia */
         margin-bottom: 12px !important;
+        overflow: hidden !important;
+    }
+    
+    /* Evitar que el contenedor interno rompa el redondeado */
+    .stExpander > div {
+        border-radius: 24px !important;
     }
     
     /* Textos internos de las tarjetas */
@@ -93,19 +100,21 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* --- SECCIÓN FOCO TÉCNICO PERSONALIZADA (NUEVA CAJA UNIFICADA NEGRA) --- */
+    /* --- SECCIÓN FOCO TÉCNICO GRIS SATINADO CON ESQUINAS SUAVES --- */
     .custom-foco-box {
-        background-color: #000000 !important; /* Negro absoluto */
-        border: 1px solid #000000 !important;
-        border-radius: 0px !important; /* Esquinas rectas editoriales */
-        padding: 16px 20px !important;
-        margin-top: 14px !important;
+        background-color: #2C2C2C !important; /* El gris oscuro intermedio de tu referencia */
+        border: 1px solid #2C2C2C !important;
+        border-radius: 24px !important; /* Redondeado idéntico al de tu imagen */
+        padding: 18px 24px !important;
+        margin-top: 16px !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
-    /* Texto claro (tono arena) para que contraste sobre el fondo negro */
+    /* Texto en color arena claro para que destaque de forma sofisticada */
     .custom-foco-box p, .custom-foco-box span {
         color: #F2EFE9 !important; 
         font-size: 0.92rem !important;
         margin: 0 !important;
+        letter-spacing: 0.02em;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -225,7 +234,7 @@ try:
                 
                 foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
                 if foco:
-                    # Usamos HTML nativo y st.markdown para unificar todo sin el azul de Streamlit
+                    # Caja unificada gris satinado con bordes muy redondeados según tu boceto
                     st.markdown(f"""
                     <div class="custom-foco-box">
                         <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
