@@ -7,97 +7,91 @@ st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layou
 
 st.markdown("""
     <style>
-    /* Importamos una tipografía muy limpia, robusta y deportiva (Inter) */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    /* Importamos una tipografía refinada y moderna */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-    /* Fondo grafito oscuro texturizado, muy premium y masculino */
+    /* Fondo limpio blanco/gris claro premium y textos grafito oscuro */
     .stApp { 
-        background-color: #0E131F; 
-        color: #E2E8F0; 
-        font-family: 'Inter', sans-serif;
+        background-color: #F8FAFC; 
+        color: #1E293B; 
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Títulos principales con tipografía deportiva y de bloque pesado */
-    h1, h2, h3 { 
-        font-family: 'Inter', sans-serif !important;
-        color: #FFFFFF !important; 
-        font-weight: 800 !important;
-        letter-spacing: -0.02em;
-    }
-    
-    /* Texto destacado con el verde de rendimiento deportivo */
-    .sport-accent {
-        color: #00F5A0; /* Verde menta/neón de alta competición, muy enérgico */
+    /* Títulos principales en Azul Marino Profundo (Elegante y Atlético) */
+    h1, h2, h3, h4 { 
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: #0F172A !important; 
+        font-weight: 700 !important;
+        letter-spacing: -0.01em;
     }
     
     /* --- MENÚ LATERAL (SIDEBAR COLAPSABLE ESTILO ZARA) --- */
     [data-testid="stSidebar"] {
-        background-color: #171E2E !important; /* Gris carbón integrado */
-        border-right: 1px solid #242F41 !important;
+        background-color: #F1F5F9 !important; /* Gris suave de contraste */
+        border-right: 1px solid #E2E8F0 !important;
     }
     [data-testid="stSidebar"] h3 {
-        font-family: 'Inter', sans-serif !important;
-        color: #00F5A0 !important;
+        color: #0F172A !important;
         font-weight: 700 !important;
     }
-    /* Estilo para los botones de opción en el menú */
+    /* Botones de opción en el menú */
     div[data-testid="stSidebarUserContent"] .stRadio label p {
-        color: #94A3B8 !important;
+        color: #334155 !important;
         font-size: 1rem !important;
         font-weight: 600 !important;
     }
     
-    /* Tarjetas del Dashboard de la página principal (Gris oscuro con sutil borde verde al pasar el ratón) */
+    /* Tarjetas del Dashboard en Cuadrícula (Fondo blanco puro, bordes muy finos) */
     .dashboard-card {
-        background-color: #171E2E;
-        border: 1px solid #242F41;
-        border-radius: 12px;
-        padding: 20px;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 14px;
+        padding: 18px;
         margin-bottom: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        height: 100%; /* Para que todas midan lo mismo en la cuadrícula */
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.02), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
     }
     
-    /* Tarjetas expandibles de ejercicios */
+    /* Tarjetas expandibles de ejercicios (Líneas limpias) */
     .stExpander { 
-        background-color: #171E2E !important; 
-        border: 1px solid #242F41 !important; 
-        border-radius: 12px !important;
+        background-color: #FFFFFF !important; 
+        border: 1px solid #E2E8F0 !important; 
+        border-radius: 14px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.02) !important;
     }
     
     /* Ajustes de color para textos generales */
     .stMarkdown p, .stExpander label {
-        color: #94A3B8 !important;
+        color: #475569 !important;
     }
     
-    /* Métricas numéricas destacados en Verde Menta Deportivo */
+    /* Métricas numéricas destacadas en Verde Salvia/Atlético Mate (Unisex) */
     [data-testid="stMetricValue"] {
-        color: #00F5A0 !important;
-        font-family: 'Inter', sans-serif;
-        font-weight: 800 !important;
+        color: #16A34A !important;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700 !important;
     }
     [data-testid="stMetricLabel"] p {
         color: #64748B !important;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Plus Jakarta Sans', sans-serif;
         text-transform: uppercase;
         font-size: 0.75rem !important;
         font-weight: 700 !important;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
     }
     
-    /* Recuadro del Foco Técnico con fondo oscuro y borde verde */
+    /* Recuadro del Foco Técnico con un tono de alerta suave neutro */
     .stAlert {
-        background-color: #0E131F !important;
-        border: 1px solid #00F5A0 !important;
-        border-radius: 10px !important;
-        color: #E2E8F0 !important;
+        background-color: #F8FAFC !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 12px !important;
+        color: #334155 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Título con fuerza deportiva
-st.markdown('<h1>CENTRO DE <span class="sport-accent">RENDIMIENTO</span></h1>', unsafe_allow_html=True)
+st.title("🏋️‍♂️ Mi Panel de Entrenamiento")
 st.write("---")
 
 # 2. Cargar datos del Excel
@@ -111,55 +105,67 @@ try:
     # Obtener los bloques únicos
     bloques_totales = [b for b in df_limpio["Bloque"].unique() if b != ""]
     
-    # --- MENÚ DESPLEGABLE SIDEBAR ---
-    opciones_menu = ["⚡ Ver Resumen General"] + list(bloques_totales)
+    # --- MENÚ DESPLEGABLE SIDEBAR (ESTILO ZARA) ---
+    opciones_menu = ["✨ Resumen General"] + list(bloques_totales)
     
     with st.sidebar:
         st.write("")
-        st.write("### 🧭 Bloques de Carga")
+        st.write("### 🧭 Menú de Bloques")
         st.write("---")
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (DASHBOARD ATLETAS)
+    # VISTA A: RESUMEN GENERAL (DASHBOARD EN CUADRÍCULA SEGÚN TU BOCETO)
     # -------------------------------------------------------------
-    if seleccion == "⚡ Ver Resumen General":
-        st.markdown('### 📊 <span class="sport-accent">Métricas</span> de la Sesión', unsafe_allow_html=True)
+    if seleccion == "✨ Resumen General":
+        st.write("### 📊 Resumen de la Sesión")
         
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
-        # KPIs Principales
+        # KPIs Principales en horizontal
         kpi1, kpi2 = st.columns(2)
         with kpi1:
             st.metric(label="Número de Bloques", value=str(len(bloques_totales)))
         with kpi2:
-            st.metric(label="Ejercicios Programados", value=str(total_ejercicios))
+            st.metric(label="Ejercicios Hoy", value=str(total_ejercicios))
             
-        st.write("")
+        st.write("---")
         
-        # Renderizado de las tarjetas del Dashboard
-        for bloque in bloques_totales:
-            df_b = df_limpio[df_limpio["Bloque"] == bloque]
-            ejercicios_del_bloque = df_b["Ejercicio"].tolist()
+        # --- AQUÍ CREAMOS LA CUADRÍCULA DE TU DIBUJO ---
+        # Creamos filas de 2 columnas cada una
+        columnas_por_fila = 2
+        
+        for i in range(0, len(bloques_totales), columnas_por_fila):
+            # Seleccionamos el grupo de bloques para esta fila (máximo 2)
+            bloques_fila = bloques_totales[i:i + columnas_por_fila]
             
-            ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.95rem; color:#E2E8F0;'><span style='color:#00F5A0;'>■</span> {ej}</li>" for ej in ejercicios_del_bloque])
+            # Generamos las columnas visuales en Streamlit
+            cols = st.columns(columnas_por_fila)
             
-            st.markdown(f"""
-            <div class="dashboard-card">
-                <h4 style="margin: 0 0 4px 0; font-family: 'Inter', sans-serif; color: #FFFFFF !important;">{bloque}</h4>
-                <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: #64748B; font-weight:600;">{len(ejercicios_del_bloque)} ejercicios prescritos</p>
-                <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
-                    {ejercicios_html}
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
+            for idx, bloque in enumerate(bloques_fila):
+                with cols[idx]:
+                    df_b = df_limpio[df_limpio["Bloque"] == bloque]
+                    ejercicios_del_bloque = df_b["Ejercicio"].tolist()
+                    
+                    # Formato de lista elegante
+                    ejercicios_html = "".join([f"<li style='margin-bottom:4px; font-size:0.9rem;'>🔹 {ej}</li>" for ej in ejercicios_del_bloque])
+                    
+                    st.markdown(f"""
+                    <div class="dashboard-card">
+                        <h4 style="margin: 0 0 4px 0; color: #1E3A8A !important;">{bloque}</h4>
+                        <p style="margin: 0 0 12px 0; font-size: 0.8rem; color: #64748B;">{len(ejercicios_del_bloque)} ejercicios</p>
+                        <ul style="margin: 0; padding-left: 15px; list-style-type: none; color: #334155;">
+                            {ejercicios_html}
+                        </ul>
+                    </div>
+                    """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
     # VISTA B: BLOQUE ESPECÍFICO
     # -------------------------------------------------------------
     else:
         bloque_actual = seleccion
-        st.markdown(f'### ⚡ {bloque_actual}', unsafe_allow_html=True)
+        st.write(f"### {bloque_actual}")
         
         df_bloque = df_limpio[df_limpio["Bloque"] == bloque_actual]
         
