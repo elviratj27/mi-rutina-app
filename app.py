@@ -93,26 +93,19 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* --- SECCIÓN FOCO TÉCNICO COMPLETAMENTE REDISEÑADA (FORZADO) --- */
-    /* Modificamos de forma agresiva cualquier bloque de notificación de Streamlit */
-    div[data-testid="stAlert"] {
-        background-color: #E6E2D8 !important; /* Tono lino/arena oscuro sutil */
-        border: 1px solid #000000 !important; /* Borde negro fino a juego con las tarjetas */
-        border-radius: 0px !important; /* Esquinas rectas completamente editoriales */
-        color: #000000 !important;
-        padding: 14px 18px !important;
+    /* --- SECCIÓN FOCO TÉCNICO PERSONALIZADA (NUEVA CAJA UNIFICADA NEGRA) --- */
+    .custom-foco-box {
+        background-color: #000000 !important; /* Negro absoluto */
+        border: 1px solid #000000 !important;
+        border-radius: 0px !important; /* Esquinas rectas editoriales */
+        padding: 16px 20px !important;
+        margin-top: 14px !important;
     }
-    /* Forzamos que el texto interno y párrafos de la alerta sean negros sin heredar el azul */
-    div[data-testid="stAlert"] p, div[data-testid="stAlert"] div, div[data-testid="stAlert"] span {
-        color: #000000 !important;
-    }
-    /* Ocultamos el icono azul informativo por defecto de Streamlit para no romper el diseño */
-    div[data-testid="stAlert"] svg {
-        display: none !important;
-    }
-    /* Quitamos el espacio extra que dejaba el icono oculto */
-    div[data-testid="stAlert"] .stMarkdown {
-        padding-left: 0px !important;
+    /* Texto claro (tono arena) para que contraste sobre el fondo negro */
+    .custom-foco-box p, .custom-foco-box span {
+        color: #F2EFE9 !important; 
+        font-size: 0.92rem !important;
+        margin: 0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -232,8 +225,12 @@ try:
                 
                 foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
                 if foco:
-                    # Al usar st.info ahora se aplicará el CSS forzado en negro y arena oscuro
-                    st.info(f"**👁️ FOCO TÉCNICO:** {foco}")
+                    # Usamos HTML nativo y st.markdown para unificar todo sin el azul de Streamlit
+                    st.markdown(f"""
+                    <div class="custom-foco-box">
+                        <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
 except Exception as e:
     st.error(f"Hubo un problema al procesar los datos: {e}")
