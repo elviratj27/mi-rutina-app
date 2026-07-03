@@ -52,45 +52,59 @@ st.markdown("""
         letter-spacing: 0.02em;
     }
     
-    /* Cuadrícula del Resumen General (Tarjetas con las nuevas esquinas redondeadas elegantes) */
+    /* Cuadrícula del Resumen General (Tarjetas claras con borde fino oscuro) */
     .dashboard-card {
         background-color: #F2EFE9;
         border: 1px solid #2C2C2C;
-        border-radius: 24px !important; /* Esquinas redondeadas como tu referencia */
+        border-radius: 24px !important;
         padding: 22px;
         margin-bottom: 16px;
         height: 100%;
     }
     
-    /* --- ADAPTACIÓN DE LOS DESPLEGABLES DE EJERCICIOS --- */
-    /* Modificamos los expanders para que tengan la misma estética y redondeado suave */
+    /* --- CAMBIO RADICAL: DESPLEGABLES DE EJERCICIOS EN OSCURO --- */
+    /* El contenedor exterior del expander */
     .stExpander { 
-        background-color: #F2EFE9 !important; 
+        background-color: #F2EFE9 !important; /* Fondo interior claro cuando se abre */
         border: 1px solid #2C2C2C !important; 
-        border-radius: 24px !important; /* Esquinas suaves idénticas a la referencia */
-        margin-bottom: 12px !important;
+        border-radius: 24px !important; /* Mismo redondeado suave de la referencia */
+        margin-bottom: 14px !important;
         overflow: hidden !important;
     }
     
-    /* Evitar que el contenedor interno rompa el redondeado */
-    .stExpander > div {
-        border-radius: 24px !important;
+    /* La barra del título (Botón superior) forzada en GRIS OSCURO SATINADO */
+    .stExpander > summary {
+        background-color: #2C2C2C !important;
+        padding: 14px 20px !important;
+        color: #F2EFE9 !important; /* Letras claras */
+        border-bottom: 1px solid #2C2C2C !important;
     }
     
-    /* Textos internos de las tarjetas */
-    .stMarkdown p, .stExpander label {
+    /* Forzar que el texto del título dentro de la barra sea claro */
+    .stExpander > summary p, .stExpander > summary span, .stExpander label {
+        color: #F2EFE9 !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.02em;
+    }
+    
+    /* Ocultamos la flecha nativa de Streamlit para dejar un diseño más limpio */
+    .stExpander > summary svg {
+        fill: #F2EFE9 !important; /* Pinta la flecha en color claro si aparece */
+    }
+    
+    /* Textos internos del ejercicio (cuando se abre, se ven sobre el fondo claro de la app) */
+    .stMarkdown p {
         color: #000000 !important;
         font-weight: 400;
     }
     
-    /* Métricas destacadas en NEGRO ABSOLUTO */
+    /* Métricas destacadas (dentro del expander abierto) */
     [data-testid="stMetricValue"] {
         color: #000000 !important;
         font-family: 'Inter', sans-serif;
         font-weight: 700 !important;
         font-size: 2.4rem !important;
     }
-    /* Etiquetas de métricas en gris oscuro/grafito */
     [data-testid="stMetricLabel"] p {
         color: #555555 !important;
         font-family: 'Inter', sans-serif;
@@ -100,16 +114,14 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* --- SECCIÓN FOCO TÉCNICO GRIS SATINADO CON ESQUINAS SUAVES --- */
+    /* --- SECCIÓN FOCO TÉCNICO GRIS SATINADO --- */
     .custom-foco-box {
-        background-color: #2C2C2C !important; /* El gris oscuro intermedio de tu referencia */
+        background-color: #2C2C2C !important;
         border: 1px solid #2C2C2C !important;
-        border-radius: 24px !important; /* Redondeado idéntico al de tu imagen */
+        border-radius: 24px !important;
         padding: 18px 24px !important;
         margin-top: 16px !important;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
-    /* Texto en color arena claro para que destaque de forma sofisticada */
     .custom-foco-box p, .custom-foco-box span {
         color: #F2EFE9 !important; 
         font-size: 0.92rem !important;
@@ -234,7 +246,6 @@ try:
                 
                 foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
                 if foco:
-                    # Caja unificada gris satinado con bordes muy redondeados según tu boceto
                     st.markdown(f"""
                     <div class="custom-foco-box">
                         <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
