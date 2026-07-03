@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# 1. Configuración de página 
+# 1. Configuración de página
 st.set_page_config(page_title="Rutina de Entrenamiento", page_icon="💪", layout="centered")
 
 st.markdown("""
@@ -173,7 +173,7 @@ try:
                     st.markdown(f"""
                     <div class="dashboard-card">
                         <h4 style="margin: 0 0 2px 0;">{bloque}</h4>
-                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios prescritos</p>
+                        <p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #555555;">{len(ejercicios_del_bloque)} ejercicios</p>
                         <ul style="margin: 0; padding-left: 5px; list-style-type: none;">
                             {ejercicios_html}
                         </ul>
