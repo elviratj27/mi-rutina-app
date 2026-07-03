@@ -37,13 +37,12 @@ st.markdown("""
     
     /* --- MENÚ LATERAL INTERACTIVO (ESTILO ZARA / COLAPSABLE) --- */
     [data-testid="stSidebar"] {
-        background-color: #E6E2D8 !important; /* Un tono un pelín más oscuro para contrastar */
+        background-color: #E6E2D8 !important; 
         border-right: 1px solid #D9D4C7 !important;
     }
     [data-testid="stSidebar"] h3 {
         color: #000000 !important;
     }
-    /* Opciones del menú lateral */
     div[data-testid="stSidebarUserContent"] .stRadio label p {
         color: #000000 !important;
         font-size: 0.95rem !important;
@@ -52,7 +51,7 @@ st.markdown("""
         letter-spacing: 0.02em;
     }
     
-    /* Cuadrícula del Resumen General (Tarjetas claras con borde fino oscuro) */
+    /* Cuadrícula del Resumen General */
     .dashboard-card {
         background-color: #F2EFE9;
         border: 1px solid #2C2C2C;
@@ -62,67 +61,73 @@ st.markdown("""
         height: 100%;
     }
     
-    /* --- CAMBIO RADICAL: DESPLEGABLES DE EJERCICIOS EN OSCURO --- */
-    /* El contenedor exterior del expander */
-    .stExpander { 
-        background-color: #F2EFE9 !important; /* Fondo interior claro cuando se abre */
-        border: 1px solid #2C2C2C !important; 
-        border-radius: 24px !important; /* Mismo redondeado suave de la referencia */
-        margin-bottom: 14px !important;
-        overflow: hidden !important;
-    }
-    
-    /* La barra del título (Botón superior) forzada en GRIS OSCURO SATINADO */
-    .stExpander > summary {
+    /* --- SOLUCIÓN DE DISEÑO: DESPLEGABLES OSCUROS UNIFICADOS --- */
+    /* Estructura para los bloques interactivos oscuros */
+    .custom-accordion {
         background-color: #2C2C2C !important;
-        padding: 14px 20px !important;
-        color: #F2EFE9 !important; /* Letras claras */
-        border-bottom: 1px solid #2C2C2C !important;
+        border-radius: 24px !important;
+        margin-bottom: 14px !important;
+        overflow: hidden;
+        border: 1px solid #2C2C2C;
     }
     
-    /* Forzar que el texto del título dentro de la barra sea claro */
-    .stExpander > summary p, .stExpander > summary span, .stExpander label {
+    /* La barra superior que se pulsa */
+    .custom-accordion-summary {
+        padding: 16px 24px !important;
         color: #F2EFE9 !important;
         font-weight: 500 !important;
+        cursor: pointer;
+        font-size: 1rem;
         letter-spacing: 0.02em;
+        outline: none;
+        list-style: none; /* Oculta la flecha nativa molesta */
+    }
+    .custom-accordion-summary::-webkit-details-marker {
+        display: none; /* Oculta la flecha en navegadores Safari/iOS */
     }
     
-    /* Ocultamos la flecha nativa de Streamlit para dejar un diseño más limpio */
-    .stExpander > summary svg {
-        fill: #F2EFE9 !important; /* Pinta la flecha en color claro si aparece */
-    }
-    
-    /* Textos internos del ejercicio (cuando se abre, se ven sobre el fondo claro de la app) */
-    .stMarkdown p {
+    /* Contenido interior cuando se despliega el ejercicio */
+    .custom-accordion-content {
+        background-color: #F8FAFC !important; /* Fondo interno muy limpio e independiente */
+        padding: 24px !important;
+        border-top: 1px solid #2C2C2C;
         color: #000000 !important;
-        font-weight: 400;
     }
     
-    /* Métricas destacadas (dentro del expander abierto) */
-    [data-testid="stMetricValue"] {
-        color: #000000 !important;
-        font-family: 'Inter', sans-serif;
-        font-weight: 700 !important;
-        font-size: 2.4rem !important;
+    /* Estilo para los bloques de texto de las filas de datos */
+    .metric-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #E2E8F0;
     }
-    [data-testid="stMetricLabel"] p {
-        color: #555555 !important;
-        font-family: 'Inter', sans-serif;
+    .metric-box {
+        flex: 1;
+        text-align: left;
+    }
+    .metric-box-label {
+        font-size: 0.75rem;
         text-transform: uppercase;
-        font-size: 0.75rem !important;
-        font-weight: 700 !important;
+        font-weight: 700;
+        color: #555555;
         letter-spacing: 0.05em;
+        margin-bottom: 4px;
+    }
+    .metric-box-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #000000;
     }
     
-    /* --- SECCIÓN FOCO TÉCNICO GRIS SATINADO --- */
+    /* --- SECCIÓN FOCO TÉCNICO COMPARTIDA --- */
     .custom-foco-box {
         background-color: #2C2C2C !important;
-        border: 1px solid #2C2C2C !important;
         border-radius: 24px !important;
         padding: 18px 24px !important;
         margin-top: 16px !important;
     }
-    .custom-foco-box p, .custom-foco-box span {
+    .custom-foco-box p {
         color: #F2EFE9 !important; 
         font-size: 0.92rem !important;
         margin: 0 !important;
@@ -131,15 +136,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Cabecera con el estilo tipográfico de tu captura
 st.markdown('<h1>WORKOUT <span class="serif-italic-accent">Plans</span></h1>', unsafe_allow_html=True)
 st.write("---")
 
-# 2. Cargar datos del Excel
 def cargar_datos():
     return pd.read_excel("rutina.xlsx")
 
-# Función auxiliar para limpiar números con .0
 def limpiar_numero(valor):
     if valor == "":
         return ""
@@ -154,11 +156,8 @@ def limpiar_numero(valor):
 try:
     df = cargar_datos()
     df_limpio = df.replace({np.nan: ""})
-
-    # Obtener los bloques únicos
     bloques_totales = [b for b in df_limpio["Bloque"].unique() if b != ""]
     
-    # --- MENÚ SIDEBAR ---
     opciones_menu = ["✨ Ver Resumen General"] + list(bloques_totales)
     
     with st.sidebar:
@@ -168,23 +167,21 @@ try:
         seleccion = st.radio("Ir a:", opciones_menu, label_visibility="collapsed")
 
     # -------------------------------------------------------------
-    # VISTA A: RESUMEN GENERAL (DASHBOARD EDITORIAL EN CUADRÍCULA)
+    # VISTA A: RESUMEN GENERAL (CUADRÍCULA)
     # -------------------------------------------------------------
     if seleccion == "✨ Ver Resumen General":
         st.markdown('### 📊 <span class="serif-italic-accent">Resumen</span> de la Sesión', unsafe_allow_html=True)
         
         total_ejercicios = len(df_limpio[df_limpio["Ejercicio"] != ""])
         
-        # KPIs de cabecera finos
-        kpi1, kpi2 = st.columns(2)
-        with kpi1:
+        col1, col2 = st.columns(2)
+        with col1:
             st.metric(label="Número de Bloques", value=str(len(bloques_totales)))
-        with kpi2:
+        with col2:
             st.metric(label="Ejercicios Programados", value=str(total_ejercicios))
             
         st.write("---")
         
-        # Cuadrícula horizontal (2 bloques por fila)
         columnas_por_fila = 2
         for i in range(0, len(bloques_totales), columnas_por_fila):
             bloques_fila = bloques_totales[i:i + columnas_por_fila]
@@ -194,8 +191,6 @@ try:
                 with cols[idx]:
                     df_b = df_limpio[df_limpio["Bloque"] == bloque]
                     ejercicios_del_bloque = df_b["Ejercicio"].tolist()
-                    
-                    # Lista minimalista limpia
                     ejercicios_html = "".join([f"<li style='margin-bottom:6px; font-size:0.9rem;'>▪ {ej}</li>" for ej in ejercicios_del_bloque])
                     
                     st.markdown(f"""
@@ -209,7 +204,7 @@ try:
                     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # VISTA B: BLOQUE ESPECÍFICO
+    # VISTA B: BLOQUE ESPECÍFICO (CON LOS NUEVOS BLOQUES OSCUROS)
     # -------------------------------------------------------------
     else:
         bloque_actual = seleccion
@@ -223,34 +218,48 @@ try:
             
             series_limpias = limpiar_numero(fila_limpia['Series'])
             reps_limpias = limpiar_numero(fila_limpia['Reps'])
+            descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
+            descanso_limpio = limpiar_numero(descanso)
             
-            with st.expander(titulo_tarjeta):
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric(label="Series", value=series_limpias)
-                with col2:
-                    st.metric(label="Reps", value=reps_limpias)
-                with col3:
-                    descanso = fila_limpia.get('Descanso (seg)', fila_limpia.get('Descanso', ''))
-                    descanso_limpio = limpiar_numero(descanso)
-                    st.metric(label="Descanso", value=descanso_limpio)
-                
-                st.write("---")
-                
-                if fila_limpia['Objetivo']:
-                    st.markdown(f"**🎯 Objetivo:** {fila_limpia['Objetivo']}")
-                if fila_limpia['Justificación']:
-                    st.markdown(f"**💡 Justificación:** {fila_limpia['Justificación']}")
-                if fila_limpia['Ejecución']:
-                    st.markdown(f"**🛠️ Ejecución:** {fila_limpia['Ejecución']}")
-                
-                foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
-                if foco:
-                    st.markdown(f"""
-                    <div class="custom-foco-box">
-                        <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
+            # Formateamos los detalles teóricos opcionales en HTML limpio
+            objetivo_html = f"<p style='margin-bottom:8px;'><strong>🎯 Objetivo:</strong> {fila_limpia['Objetivo']}</p>" if fila_limpia['Objetivo'] else ""
+            justificacion_html = f"<p style='margin-bottom:8px;'><strong>💡 Justificación:</strong> {fila_limpia['Justificación']}</p>" if fila_limpia['Justificación'] else ""
+            ejecucion_html = f"<p style='margin-bottom:8px;'><strong>🛠️ Ejecución:</strong> {fila_limpia['Ejecución']}</p>" if fila_limpia['Ejecución'] else ""
+            
+            # Bloque de foco técnico
+            foco = fila_limpia.get('Foco Técnico', fila_limpia.get('Foco_Técnico', ''))
+            foco_html = f"""
+            <div class="custom-foco-box">
+                <p><strong>👁️ FOCO TÉCNICO:</strong> {foco}</p>
+            </div>
+            """ if foco else ""
+
+            # Renderizado del componente unificado 100% idéntico a tu referencia
+            st.markdown(f"""
+            <details class="custom-accordion">
+                <summary class="custom-accordion-summary">{titulo_tarjeta}</summary>
+                <div class="custom-accordion-content">
+                    <div class="metric-row">
+                        <div class="metric-box">
+                            <div class="metric-box-label">Series</div>
+                            <div class="metric-box-value">{series_limpias}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-box-label">Reps</div>
+                            <div class="metric-box-value">{reps_limpias}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-box-label">Descanso</div>
+                            <div class="metric-box-value">{descanso_limpio}</div>
+                        </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    {objetivo_html}
+                    {justificacion_html}
+                    {ejecucion_html}
+                    {foco_html}
+                </div>
+            </details>
+            """, unsafe_allow_html=True)
 
 except Exception as e:
     st.error(f"Hubo un problema al procesar los datos: {e}")
